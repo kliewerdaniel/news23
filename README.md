@@ -5,7 +5,7 @@ This project creates an automated, continuous news broadcast stream by fetching 
 ## Features
 
 * **Persona System:**
-    * **Quantified Writing Style:** Uses numerical values (0.0-1.0) to precisely control:
+    * **Unified Quantified Writing Style:** Uses numerical values (0.0-1.0) to precisely control writing across all aspects:
         * Tone & Emotional Expression (warmth, enthusiasm, optimism, confidence)
         * Formality & Style (linguistic formality, vocabulary complexity)
         * Analytical Approach (systematic rigor, evidence dependency)
@@ -15,7 +15,8 @@ This project creates an automated, continuous news broadcast stream by fetching 
         * Citation & Authority (citation density, authority deference)
         * Uncertainty & Probability (epistemic stance, probabilistic reasoning)
         * Structural Preferences (organization style, transition explicitness)
-    * **Dynamic Prompt Generation:** Automatically maps persona traits to natural language intensities
+    * **Comprehensive Style Control:** Every interaction with the LLM (article summarization, segment generation, transitions) is guided by these quantified traits
+    * **Dynamic Prompt Generation:** Automatically maps persona traits to natural language intensities for consistent style
     * **Multiple Personas:** Includes pre-configured personas like objective, satirist, and quantitative
 
 * **Web Interface:** Access and control the news broadcast through a FastAPI-powered web interface
@@ -112,9 +113,9 @@ vocabulary_complexity: 0.8         # 0.0 = simple/accessible, 1.0 = advanced/tec
 # Rhetorical Devices, Citation & Authority, Uncertainty & Probability, and Structural Preferences
 ```
 
-### Prompt Generation
+### Integrated Prompt Generation
 
-The system uses three main prompt types, each incorporating the persona's quantized traits:
+The system maintains consistent writing style through quantified traits that inform every interaction with the LLM. Each prompt type below incorporates all persona traits to ensure a cohesive voice throughout the broadcast:
 
 1. **Article Summary Prompt:**
 ```
