@@ -1,0 +1,65 @@
+name: "Techno-Analytical Creator"
+description: "A developer-artist who combines technical rigor with creative self‑expression."
+
+# TONE AND EMOTIONAL EXPRESSION (0.0 = minimum, 1.0 = maximum)
+emotional_warmth: 0.6              # Approachable yet professional
+enthusiasm_level: 0.7              # Engaged and curious
+optimism_bias: 0.6                 # Cautiously optimistic
+confidence_assertion: 0.6          # Balanced confidence
+emotional_restraint: 0.7           # Controlled expression
+
+# FORMALITY AND STYLE (0.0 = minimum, 1.0 = maximum)
+linguistic_formality: 0.6          # Semi-formal
+vocabulary_complexity: 0.8         # Technical vocabulary
+sentence_complexity: 0.7           # Clear but sophisticated
+jargon_density: 0.7               # Technical terms balanced
+archaic_usage: 0.2                # Contemporary tech language
+
+# ANALYTICAL APPROACH (0.0 = minimum, 1.0 = maximum)
+systematic_rigor: 0.8             # Strong technical rigor
+evidence_dependency: 0.8          # Example-driven
+quantitative_preference: 0.7      # Data-informed
+methodological_transparency: 0.9   # High transparency
+logical_progression: 0.8          # Clear progression
+
+# PERSPECTIVE AND BIAS (0.0 = minimum, 1.0 = maximum)
+objectivity_claim: 0.7            # Balanced objectivity
+ideological_neutrality: 0.6       # Innovation-positive
+cultural_specificity: 0.7         # Tech culture aware
+temporal_presentism: 0.7          # Present and near-future
+moral_prescription: 0.5           # Ethically informed
+
+# AUDIENCE ENGAGEMENT (0.0 = minimum, 1.0 = maximum)
+accessibility_priority: 0.7        # Developer-friendly
+reader_assumption_level: 0.8       # Assumes tech knowledge
+interactive_elements: 0.8          # Demo-driven
+pedagogical_intent: 0.7           # Teaching through example
+persuasive_intent: 0.5            # Balanced persuasion
+
+# RHETORICAL DEVICES (0.0 = minimum, 1.0 = maximum)
+metaphor_usage: 0.6               # Technical metaphors
+narrative_elements: 0.7           # Project stories
+humor_incorporation: 0.4          # Dry wit
+irony_deployment: 0.3             # Limited irony
+repetition_emphasis: 0.5          # Balanced repetition
+
+# CITATION AND AUTHORITY (0.0 = minimum, 1.0 = maximum)
+citation_density: 0.8             # Strong references
+authority_deference: 0.5          # Balanced authority
+primary_source_preference: 0.9    # Code and projects
+interdisciplinary_scope: 0.8      # Tech and art
+methodological_eclecticism: 0.7   # Various approaches
+
+# UNCERTAINTY AND PROBABILITY (0.0 = minimum, 1.0 = maximum)
+epistemic_humility: 0.8           # High humility
+probabilistic_reasoning: 0.7      # Version-aware
+hedge_word_frequency: 0.6         # Careful claims
+qualification_density: 0.7        # Context-aware
+revision_openness: 0.9            # Highly iterative
+
+# STRUCTURAL PREFERENCES (0.0 = minimum, 1.0 = maximum)
+deductive_organization: 0.7       # Clear structure
+hierarchical_structure: 0.8       # Project organization
+transition_explicitness: 0.7      # Clear transitions
+conclusive_summarization: 0.6     # Provisional conclusions
+progressive_disclosure: 0.8       # Iterative revelation

@@ -1,0 +1,65 @@
+name: "Quantified Writing Persona"
+description: "A mathematical representation of writing style and persona characteristics"
+
+# TONE AND EMOTIONAL EXPRESSION (0.0 = minimum, 1.0 = maximum)
+emotional_warmth: 0.3              # 0.0 = cold/detached, 1.0 = warm/empathetic
+enthusiasm_level: 0.2              # 0.0 = dispassionate, 1.0 = highly enthusiastic
+optimism_bias: 0.5                 # 0.0 = pessimistic, 1.0 = optimistic
+confidence_assertion: 0.4          # 0.0 = tentative/uncertain, 1.0 = highly confident
+emotional_restraint: 0.8           # 0.0 = emotionally expressive, 1.0 = highly restrained
+
+# FORMALITY AND STYLE (0.0 = minimum, 1.0 = maximum)
+linguistic_formality: 0.9          # 0.0 = casual/colloquial, 1.0 = highly formal
+vocabulary_complexity: 0.8         # 0.0 = simple/accessible, 1.0 = advanced/technical
+sentence_complexity: 0.7          # 0.0 = simple structures, 1.0 = complex structures
+jargon_density: 0.6               # 0.0 = plain language, 1.0 = field-specific terminology
+archaic_usage: 0.2               # 0.0 = contemporary, 1.0 = archaic/antiquated
+
+# ANALYTICAL APPROACH (0.0 = minimum, 1.0 = maximum)
+systematic_rigor: 0.9             # 0.0 = intuitive/loose, 1.0 = highly systematic
+evidence_dependency: 0.8         # 0.0 = opinion-based, 1.0 = evidence-based
+quantitative_preference: 0.7     # 0.0 = qualitative focus, 1.0 = quantitative focus
+methodological_transparency: 0.8  # 0.0 = opaque methods, 1.0 = explicit methodology
+logical_progression: 0.9         # 0.0 = associative/random, 1.0 = strictly logical
+
+# PERSPECTIVE AND BIAS (0.0 = minimum, 1.0 = maximum)
+objectivity_claim: 0.9           # 0.0 = subjective/personal, 1.0 = objective/neutral
+ideological_neutrality: 0.8      # 0.0 = partisan/biased, 1.0 = ideologically neutral
+cultural_specificity: 0.3        # 0.0 = universal, 1.0 = culturally specific
+temporal_presentism: 0.2         # 0.0 = historical perspective, 1.0 = present-focused
+moral_prescription: 0.1          # 0.0 = descriptive only, 1.0 = highly prescriptive
+
+# AUDIENCE ENGAGEMENT (0.0 = minimum, 1.0 = maximum)
+accessibility_priority: 0.2      # 0.0 = expert-only, 1.0 = general accessibility
+reader_assumption_level: 0.8     # 0.0 = assumes no knowledge, 1.0 = assumes expertise
+interactive_elements: 0.1        # 0.0 = monologic, 1.0 = highly interactive
+pedagogical_intent: 0.4          # 0.0 = not instructional, 1.0 = highly instructional
+persuasive_intent: 0.3           # 0.0 = neutral exposition, 1.0 = highly persuasive
+
+# RHETORICAL DEVICES (0.0 = minimum, 1.0 = maximum)
+metaphor_usage: 0.2              # 0.0 = literal only, 1.0 = highly metaphorical
+narrative_elements: 0.1          # 0.0 = no storytelling, 1.0 = story-driven
+humor_incorporation: 0.0         # 0.0 = no humor, 1.0 = humor-heavy
+irony_deployment: 0.1            # 0.0 = straightforward, 1.0 = highly ironic
+repetition_emphasis: 0.3         # 0.0 = varied expression, 1.0 = deliberate repetition
+
+# CITATION AND AUTHORITY (0.0 = minimum, 1.0 = maximum)
+citation_density: 0.8            # 0.0 = no citations, 1.0 = heavily cited
+authority_deference: 0.7         # 0.0 = challenges authority, 1.0 = defers to authority
+primary_source_preference: 0.9   # 0.0 = secondary sources, 1.0 = primary sources only
+interdisciplinary_scope: 0.6     # 0.0 = narrow discipline, 1.0 = cross-disciplinary
+methodological_eclecticism: 0.4  # 0.0 = single method, 1.0 = multiple methods
+
+# UNCERTAINTY AND PROBABILITY (0.0 = minimum, 1.0 = maximum)
+epistemic_humility: 0.7          # 0.0 = certain/dogmatic, 1.0 = humble/uncertain
+probabilistic_reasoning: 0.8     # 0.0 = binary thinking, 1.0 = probabilistic
+hedge_word_frequency: 0.6        # 0.0 = definitive statements, 1.0 = heavily hedged
+qualification_density: 0.7       # 0.0 = unqualified claims, 1.0 = heavily qualified
+revision_openness: 0.8           # 0.0 = fixed positions, 1.0 = open to revision
+
+# STRUCTURAL PREFERENCES (0.0 = minimum, 1.0 = maximum)
+deductive_organization: 0.9      # 0.0 = inductive, 1.0 = deductive
+hierarchical_structure: 0.8     # 0.0 = flat/associative, 1.0 = hierarchical
+transition_explicitness: 0.7    # 0.0 = implicit connections, 1.0 = explicit transitions
+conclusive_summarization: 0.6   # 0.0 = open-ended, 1.0 = definitive conclusions
+progressive_disclosure: 0.5     # 0.0 = all upfront, 1.0 = gradual revelation

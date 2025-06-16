@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>News Generator UI</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 40px;
+      color: black;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .input-group {
+      margin-bottom: 30px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    button {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: black;
+      color: white;
+      transition: opacity 0.2s;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    .status-indicator {
+      padding: 15px;
+      background-color: #f8f8f8;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin-bottom: 30px;
+    }
+
+    #output {
+      background-color: black;
+      color: white;
+      padding: 20px;
+      border-radius: 5px;
+      font-family: monospace;
+      white-space: pre-wrap;
+      height: 300px;
+      overflow-y: auto;
+    }
+
+    .status-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .status-dot.running {
+      background-color: black;
+    }
+
+    .status-dot.stopped {
+      background-color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="input-group">
+      <label for="topic">Topic Guidance:</label>
+      <input type="text" id="topic" placeholder="Enter topic guidance">
+    </div>
+
+    <div class="input-group">
+      <label for="interval">Fetch Interval (seconds):</label>
+      <input type="number" id="interval" min="1" value="60">
+    </div>
+
+    <div class="input-group">
+      <label for="persona">Persona:</label>
+      <select id="persona">
+        <option value="con.yaml">Conservative</option>
+        <option value="funny.yaml">Funny</option>
+        <option value="intel.yaml">Intelligence</option>
+        <option value="konrad.yaml">Konrad</option>
+        <option value="marine.yaml">Marine</option>
+        <option value="mystic.yaml">Mystic</option>
+        <option value="objective.yaml">Objective</option>
+        <option value="pragmatist.yaml">Pragmatist</option>
+        <option value="quant.yaml">Quantitative</option>
+        <option value="satirist.yaml">Satirist</option>
+        <option value="scholar.yaml">Scholar</option>
+      </select>
+    </div>
+
+    <div class="button-group">
+      <button id="startBtn">Start Generator</button>
+      <button id="stopBtn" disabled>Stop Generator</button>
+    </div>
+
+    <div class="status-indicator">
+      <span class="status-dot stopped"></span>
+      Status: <span id="status">Stopped</span>
+    </div>
+
+    <div id="output"></div>
+  </div>
+
+  <script>
+    let isRunning = false;
+    const startBtn = document.getElementById('startBtn');
+    const stopBtn = document.getElementById('stopBtn');
+    const status = document.getElementById('status');
+    const statusDot = document.querySelector('.status-dot');
+    const output = document.getElementById('output');
+
+    startBtn.addEventListener('click', async () => {
+      const topic = document.getElementById('topic').value;
+      const interval = parseInt(document.getElementById('interval').value) / 60; // Convert seconds to minutes
+      const persona = document.getElementById('persona').value;
+      
+      try {
+        const response = await fetch('/start', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            topic: topic || undefined,
+            fetch_interval: interval,
+            persona: persona
+          })
+        });
+        
+        const data = await response.json();
+        
+        if (data.status === 'success') {
+          isRunning = true;
+          startBtn.disabled = true;
+          stopBtn.disabled = false;
+          status.textContent = 'Running';
+          statusDot.classList.remove('stopped');
+          statusDot.classList.add('running');
+          
+          output.textContent += `[${new Date().toLocaleTimeString()}] Starting generator...\n`;
+          output.textContent += `Topic: ${topic || 'None'}\n`;
+          output.textContent += `Interval: ${interval} minutes\n`;
+          output.textContent += `Persona: ${persona}\n\n`;
+        } else {
+          output.textContent += `[${new Date().toLocaleTimeString()}] Error: ${data.message}\n\n`;
+        }
+      } catch (error) {
+        output.textContent += `[${new Date().toLocaleTimeString()}] Error: ${error.message}\n\n`;
+      }
+      
+      output.scrollTop = output.scrollHeight;
+    });
+
+    stopBtn.addEventListener('click', async () => {
+      try {
+        const response = await fetch('/stop', {
+          method: 'POST'
+        });
+        
+        const data = await response.json();
+        
+        if (data.status === 'success') {
+          isRunning = false;
+          startBtn.disabled = false;
+          stopBtn.disabled = true;
+          status.textContent = 'Stopped';
+          statusDot.classList.remove('running');
+          statusDot.classList.add('stopped');
+          
+          output.textContent += `[${new Date().toLocaleTimeString()}] Generator stopped.\n\n`;
+        } else {
+          output.textContent += `[${new Date().toLocaleTimeString()}] Error: ${data.message}\n\n`;
+        }
+      } catch (error) {
+        output.textContent += `[${new Date().toLocaleTimeString()}] Error: ${error.message}\n\n`;
+      }
+      
+      output.scrollTop = output.scrollHeight;
+    });
+  </script>
+</body>
+</html>

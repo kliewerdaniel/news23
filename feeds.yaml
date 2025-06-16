@@ -1,0 +1,37 @@
+feeds:
+  - "http://feeds.bbci.co.uk/news/world/rss.xml"                     # BBC World
+  - "https://www.theguardian.com/world/rss"                         # The Guardian World
+  - "https://feeds.npr.org/1004/rss.xml"                            # NPR World
+  - "https://www.aljazeera.com/xml/rss/all.xml"                     # Al Jazeera
+  - "https://news.un.org/feed/subscribe/en/news/all/rss.xml"        # UN News
+  - "https://theintercept.com/feed/?rss"                            # The Intercept
+  - "https://globalvoices.org/feed/"                                # Global Voices
+  - "https://www.thehindu.com/news/international/?service=rss"      # The Hindu
+  - "https://timesofindia.indiatimes.com/rssfeeds/296589292.cms"    # Times of India
+  - "https://www.scmp.com/rss/91/feed"                              # SCMP
+  - "https://www.chinadaily.com.cn/rss/world_rss.xml"               # China Daily
+  - "https://www.japantimes.co.jp/feed/"                            # The Japan Times
+  - "https://www.lemonde.fr/rss/une.xml"                            # Le Monde
+  - "https://www.france24.com/en/rss"                               # France 24
+  - "https://rss.dw.com/rdf/rss-en-all"                             # Deutsche Welle
+  - "https://www.spiegel.de/international/index.rss"                # Der Spiegel
+  - "https://www.rt.com/rss/news/"                                  # RT
+  - "https://feeds.nytimes.com/nyt/rss/World"                       # NY Times World
+  - "https://www.smh.com.au/rss/world.xml"                          # Sydney Morning Herald
+  - "https://www.abc.net.au/news/feed/51120/rss.xml"                # ABC Australia
+  - "https://www.iranintl.com/en/feed"                              # Iran International
+  - "https://tass.com/rss/v2.xml"                                   # TASS
+  - "http://feeds.reuters.com/Reuters/worldNews"                    # Reuters World
+  - "http://rss.cnn.com/rss/cnn_topstories.rss"                     # CNN Top Stories
+  - "http://feeds.nbcnews.com/nbcnews/public/world"                 # NBC News World
+  - "https://www.npr.org/rss/rss.php?id=1004"                       # NPR World (alternate)
+  - "https://www.nytimes.com/services/xml/rss/nyt/HomePage.xml"     # NY Times HomePage
+  - "https://rss.cnn.com/rss/cnn_world.rss"                         # CNN World
+  - "https://www.usatoday.com/rss/news/world/"                      # USA Today World
+  - "https://feeds.foxnews.com/foxnews/world"                       # Fox News World
+  - "https://www.ft.com/?format=rss"                                # Financial Times
+  - "https://techcrunch.com/feed/"                                  # TechCrunch
+  - "https://www.theverge.com/rss/index.xml"                        # The Verge
+  - "https://arstechnica.com/rss-feeds/"                            # Ars Technica
+  - "https://gizmodo.com/rss"                                       # Gizmodo
+  - "https://www.wired.com/feed/rss"                                # Wired
