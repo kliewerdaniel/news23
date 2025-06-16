@@ -4,6 +4,20 @@ This project creates an automated, continuous news broadcast stream by fetching 
 
 ## Features
 
+* **Persona System:**
+    * **Quantified Writing Style:** Uses numerical values (0.0-1.0) to precisely control:
+        * Tone & Emotional Expression (warmth, enthusiasm, optimism, confidence)
+        * Formality & Style (linguistic formality, vocabulary complexity)
+        * Analytical Approach (systematic rigor, evidence dependency)
+        * Perspective & Bias (objectivity, ideological neutrality)
+        * Audience Engagement (accessibility, knowledge assumptions)
+        * Rhetorical Devices (metaphor usage, narrative elements)
+        * Citation & Authority (citation density, authority deference)
+        * Uncertainty & Probability (epistemic stance, probabilistic reasoning)
+        * Structural Preferences (organization style, transition explicitness)
+    * **Dynamic Prompt Generation:** Automatically maps persona traits to natural language intensities
+    * **Multiple Personas:** Includes pre-configured personas like objective, satirist, and quantitative
+
 * **Web Interface:** Access and control the news broadcast through a FastAPI-powered web interface
 * **Continuous News Stream:** Automatically fetches and processes news at a defined interval
 * **Intelligent Article Processing:**
@@ -77,6 +91,71 @@ This project creates an automated, continuous news broadcast stream by fetching 
     tone: "neutral"
     instructions: "Present news in a clear, unbiased manner..."
     ```
+
+## Persona System Details
+
+### Quantized Style Values (0.0 = minimum, 1.0 = maximum)
+
+The persona system uses precise numerical values to control various aspects of writing style. Example from quant.yaml:
+
+```yaml
+# TONE AND EMOTIONAL EXPRESSION
+emotional_warmth: 0.3              # 0.0 = cold/detached, 1.0 = warm/empathetic
+enthusiasm_level: 0.2              # 0.0 = dispassionate, 1.0 = highly enthusiastic
+optimism_bias: 0.5                 # 0.0 = pessimistic, 1.0 = optimistic
+
+# FORMALITY AND STYLE
+linguistic_formality: 0.9          # 0.0 = casual/colloquial, 1.0 = highly formal
+vocabulary_complexity: 0.8         # 0.0 = simple/accessible, 1.0 = advanced/technical
+
+# More categories include: Analytical Approach, Perspective & Bias, Audience Engagement,
+# Rhetorical Devices, Citation & Authority, Uncertainty & Probability, and Structural Preferences
+```
+
+### Prompt Generation
+
+The system uses three main prompt types, each incorporating the persona's quantized traits:
+
+1. **Article Summary Prompt:**
+```
+You are writing as a [name].
+
+Description: [description]
+
+# TONE AND EMOTIONAL EXPRESSION
+Emotional Warmth: [mapped intensity (e.g., "very cold/detached")]
+Enthusiasm Level: [mapped intensity]
+[... other traits mapped to intensities ...]
+
+Please summarize the following article accordingly in 6 sentences:
+[article_title]
+[article_content]
+```
+
+2. **News Segment Script Prompt:**
+```
+You are writing as a [name].
+
+Description: [description]
+[... personality profile with mapped intensities ...]
+
+Write a news segment about [topic]. Use this information:
+[context]
+
+Write 7-10 sentences in a concise style, focusing directly on the news.
+[optional guidance]
+```
+
+3. **Transition Phrase Prompt:**
+```
+You are a news anchor with the following persona:
+
+Description: [description]
+[... personality profile with mapped intensities ...]
+
+Generate a short, smooth transition phrase (1-2 sentences) from a news segment 
+about '[previous_topic]' to a new segment about '[current_topic]'.
+```
 
 ## Usage
 
