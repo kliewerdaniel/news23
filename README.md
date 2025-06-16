@@ -1,78 +1,68 @@
------
-
 # Automated News Broadcast Generator
 
-This project creates an automated, continuous news broadcast stream by fetching articles from RSS feeds, processing them with advanced NLP techniques (summarization, sentiment analysis, relevancy scoring, and clustering), and then generating a dynamic news script. The script is then converted to speech and played, offering a personalized audio news experience.
-
------
+This project creates an automated, continuous news broadcast stream by fetching articles from RSS feeds, processing them with advanced NLP techniques, and generating a dynamic news script with customizable personas. The script is converted to speech and played through a web interface, offering a personalized audio news experience.
 
 ## Features
 
-  * **Continuous News Stream:** Automatically fetches and processes news at a defined interval, providing an always up-to-date broadcast.
-  * **Intelligent Article Curation:**
-      * **Feed Fetching:** Asynchronously gathers articles from multiple RSS feeds.
-      * **Content Extraction & Deduplication:** Cleans HTML content and skips duplicate articles using content hashing.
-      * **Summarization:** Uses a local LLM (Ollama) to generate concise summaries for each article.
-      * **Relevancy Scoring:** (Optional) Scores articles based on their relevance to a user-defined topic.
-      * **Sentiment Analysis:** Analyzes the emotional tone of articles.
-      * **Importance Scoring:** Ranks articles based on freshness, content quality, readability, and sentiment impact.
-      * **TF-IDF Clustering:** Groups similar articles into coherent news topics.
-  * **Dynamic Script Generation:**
-      * Crafts news segments using an LLM, integrating summaries from clustered articles.
-      * Allows for optional user guidance to influence script tone or focus.
-  * **Real-time Audio Playback:**
-      * Converts generated news scripts into natural-sounding speech using `edge-tts`.
-      * Streams audio seamlessly in a separate thread for continuous playback.
-  * **Robust Error Handling:** Implements a Circuit Breaker pattern for external API calls and comprehensive logging.
-  * **Performance Monitoring:** Tracks key metrics like articles processed, processing times, and API call success rates.
-  * **Persistent Caching:** Uses SQLite to cache processed articles, preventing redundant processing.
+* **Web Interface:** Access and control the news broadcast through a FastAPI-powered web interface
+* **Continuous News Stream:** Automatically fetches and processes news at a defined interval
+* **Intelligent Article Processing:**
+    * **Feed Fetching:** Asynchronously gathers articles from multiple RSS feeds
+    * **Content Extraction:** Cleans HTML content and skips duplicate articles using content hashing
+    * **Summarization:** Uses Ollama for local LLM-powered article summarization
+    * **Relevancy Scoring:** Scores articles based on their relevance to user-defined topics
+    * **Stream Clustering:** Groups similar articles using advanced streaming clustering algorithms
+    * **Sentiment Analysis:** Analyzes emotional tone using TextBlob
+    * **Importance Scoring:** Ranks articles based on freshness, content quality, readability, and sentiment
+* **Dynamic Script Generation:**
+    * **Persona System:** Uses YAML-defined personas to customize news delivery style
+    * **Smart Transitions:** Generates natural transitions between news segments
+    * **Context-Aware:** Incorporates multiple related articles into coherent segments
+* **Robust Audio System:**
+    * **Queue-based Playback:** Streams audio seamlessly using a threaded queue system
+    * **Edge TTS Integration:** Converts scripts to natural-sounding speech
+* **System Reliability:**
+    * **Circuit Breaker:** Prevents system overload during API calls
+    * **Performance Monitoring:** Tracks metrics like processing times and success rates
+    * **Persistent Storage:** Caches processed articles in SQLite
+    * **Comprehensive Logging:** Detailed operation logs and broadcast archives
 
------
+## Prerequisites
 
-## Getting Started
-
-### Prerequisites
-
-Before you begin, ensure you have the following installed:
-
-  * **Python 3.8+**
-  * **Ollama:** This project relies on a locally running Ollama instance to provide the language models for summarization, relevancy scoring, and script generation.
-      * Download and install Ollama from [ollama.com](https://ollama.com/).
-      * Pull the required models. The default configuration uses `mistral-small:24b-instruct-2501-q8_0` for summarization and broadcast generation, and `nomic-embed-text` for embeddings (though TF-IDF is currently used for clustering).
+* **Python 3.8+**
+* **Ollama:**
+    * Install from [ollama.com](https://ollama.com/)
+    * Required models:
         ```bash
         ollama run mistral-small:24b-instruct-2501-q8_0
-        ollama run nomic-embed-text
         ```
-  * **NLTK Data:** The project uses NLTK for sentiment analysis. It will attempt to download the `vader_lexicon` automatically, but you can do it manually if needed:
-    ```python
-    import nltk
-    nltk.download('vader_lexicon')
-    ```
-
-### Installation
-
-1.  **Clone the repository:**
+* **Spacy Language Model:**
     ```bash
-    git clone https://github.com/kliewerdaniel/news08.git
-    cd news08
+    python -m spacy download en_core_web_sm
     ```
-2.  **Create a virtual environment (recommended):**
+
+## Installation
+
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/kliewerdaniel/news23.git
+    cd news23
+    ```
+
+2. Create and activate virtual environment:
     ```bash
     python -m venv venv
-    source venv/bin/activate # On Windows, use `venv\Scripts\activate`
+    source venv/bin/activate  # On Windows: venv\Scripts\activate
     ```
-3.  **Install dependencies:**
+
+3. Install dependencies:
     ```bash
     pip install -r requirements.txt
     ```
-    (A `requirements.txt` file is not provided in the prompt, but it should contain `aiohttp`, `feedparser`, `PyYAML`, `requests`, `pandas`, `numpy`, `scikit-learn`, `nltk`, `pydub`, and optionally `edge-tts`). If `edge-tts` is not available, audio playback will be disabled.
 
-### Configuration
+## Configuration
 
-1.  **`feeds.yaml`:** Create a `feeds.yaml` file in the root directory of the project. This file will list the RSS feed URLs you want to monitor.
-
-    Example `feeds.yaml`:
-
+1. **feeds.yaml:** Create this in the root directory to specify RSS feeds:
     ```yaml
     feeds:
       - https://www.reuters.com/arc/feed/rss/
@@ -80,133 +70,88 @@ Before you begin, ensure you have the following installed:
       - https://feeds.bbci.co.uk/news/rss.xml
     ```
 
-2.  **`CONFIG` in `news_generator.py`:** The `CONFIG` dictionary at the top of the `news_generator.py` file allows you to adjust various parameters:
-
-      * `ollama_api`: Base URL for your Ollama instance.
-      * `models`: Specify which Ollama models to use for different tasks.
-      * `processing`: Control parameters like `max_articles_per_feed`, `min_article_length`, `max_clusters`, and `target_segments`.
-      * `output`: Set `max_broadcast_length`.
-
------
+2. **personas:** Customize news delivery style in the personas directory:
+    ```yaml
+    # personas/objective.yaml example
+    style: "formal and factual"
+    tone: "neutral"
+    instructions: "Present news in a clear, unbiased manner..."
+    ```
 
 ## Usage
 
-Run the main script from your terminal:
-
-```bash
-python main.py
-```
-
-### Command-line Arguments
-
-You can customize the broadcast behavior using command-line arguments:
-
-  * `--topic <YOUR_TOPIC>`: (Optional) Focus the news generation on a specific topic (e.g., "artificial intelligence", "climate change"). Articles will be filtered based on their relevancy to this topic.
-  * `--guidance <YOUR_GUIDANCE>`: (Optional) Provide guidance for refining the news script (e.g., "keep it optimistic", "focus on economic impacts").
-  * `--fetch_interval <MINUTES>`: (Optional) Set the interval in minutes between fetching new news feeds (default: 15 minutes).
-
-**Examples:**
-
-  * To run a general news broadcast:
+1. **Start the Web Server:**
     ```bash
     python main.py
     ```
-  * To get news focused on "Space Exploration":
-    ```bash
-    python main.py --topic "Space Exploration"
-    ```
-  * To get news with a "concise and formal" tone:
-    ```bash
-    python main.py --guidance "Keep the tone concise and formal."
-    ```
-  * To fetch news every 30 minutes:
-    ```bash
-    python main.py --fetch_interval 30
-    ```
 
------
+2. **Access the Interface:**
+   Open http://localhost:8000 in your browser
 
-## How it Works (Under the Hood)
-
-1.  **Initialization:** The `NewsGenerator` class sets up logging, a SQLite database for caching, and NLTK for sentiment analysis. It also initializes a `CircuitBreaker` for API resilience and a `PerformanceMonitor`.
-2.  **Feed Fetching (`fetch_feeds_batch`):**
-      * Reads RSS feed URLs from `feeds.yaml`.
-      * Asynchronously fetches content from feeds in batches using `aiohttp`.
-      * Parses feed entries using `feedparser`, extracts content, and performs basic cleaning.
-      * Checks for duplicate articles using a content hash against a 3-day cache in `news_cache.db`.
-3.  **Article Processing (`process_articles_smart`):**
-      * **Summarization:** For each new article, it calls the configured Ollama `summary_model` to generate a brief summary.
-      * **Relevancy Scoring (if `--topic` is used):** Queries the LLM to score how relevant an article's title and summary are to the specified topic.
-      * **Clustering (`cluster_articles_tfidf`):** Uses TF-IDF vectorization and K-Means clustering to group similar articles. This helps in creating coherent news segments.
-      * **Importance Scoring (`calculate_importance_scores`):** Calculates a combined score for each article based on its freshness, content length, readability, and sentiment.
-4.  **Broadcast Segment Creation (`create_broadcast_segments`):**
-      * Groups articles by their assigned clusters.
-      * If a topic is specified, filters articles below a defined relevancy threshold.
-      * Selects the top articles from each cluster based on importance to form segments.
-      * Determines a topic for each segment.
-5.  **Script Generation (`generate_segment_script`):**
-      * Uses the Ollama `broadcast_model` to generate a news anchor-style script for each segment, incorporating the summaries of the selected articles.
-      * If `guidance` is provided, the script can be refined.
-6.  **Audio Generation and Playback (`generate_and_queue_audio`, `play_audio_from_queue`):**
-      * The `generate_and_queue_audio` function uses the `edge-tts` library to convert the generated script into an audio stream.
-      * This audio data is then put into a `queue.Queue`.
-      * A separate `player_thread` continuously pulls audio data from this queue and plays it using `pydub`. This ensures smooth, continuous playback without blocking the main news generation process.
-7.  **Continuous Loop (`run_continuous`):** The `run_continuous` method orchestrates the entire process, running indefinitely at the specified `fetch_interval`.
-
------
+3. **Control Options:**
+   * Start/stop the news broadcast
+   * Select news personas
+   * Set topic filters
+   * Adjust fetch intervals
+   * Provide custom guidance
 
 ## Project Structure
 
 ```
 .
-├── main.py         # Main script containing the NewsGenerator class and logic
-├── feeds.yaml                # Configuration file for RSS feed URLs (user-defined)
-├── news.log                  # Log file for application events
-├── news_cache.db             # SQLite database for caching processed article hashes
-└── broadcast_logs/           # Directory to store Markdown logs of generated broadcasts
-    └── log_YYYYMMDD_HHMMSS.md
+├── main.py                   # FastAPI web server and main entry point
+├── feeds.yaml               # RSS feed configuration
+├── personas/               # News delivery style definitions
+│   ├── objective.yaml
+│   ├── satirist.yaml
+│   └── ...
+├── src/
+│   ├── audio/             # Audio generation and playback
+│   ├── core/             # Core processing logic
+│   ├── data/             # Database and data management
+│   ├── feeds/            # Feed fetching and processing
+│   └── nlp/              # NLP utilities and clustering
+├── broadcast_logs/        # Generated broadcast archives
+└── news.log              # Application logging
 ```
-
------
 
 ## Dependencies
 
-The core dependencies for this project include:
-
-  * `aiohttp`: For asynchronous HTTP requests (fetching feeds, communicating with Ollama).
-  * `feedparser`: For parsing RSS/Atom feeds.
-  * `PyYAML`: For loading configuration from `feeds.yaml`.
-  * `requests`: (Potentially for legacy API calls, though `aiohttp` is preferred for async).
-  * `pandas`, `numpy`: For data manipulation and numerical operations.
-  * `scikit-learn`: For TF-IDF vectorization and K-Means clustering (`TfidfVectorizer`, `KMeans`).
-  * `nltk`: For Natural Language Toolkit functionalities, specifically sentiment analysis (`SentimentIntensityAnalyzer`).
-  * `pydub`: For audio manipulation and playback.
-  * `edge-tts` (Optional): For text-to-speech generation. If not installed, audio features will be disabled.
-  * `sqlite3`: Built-in Python library for database interactions.
-
------
+Core dependencies include:
+* `fastapi` & `uvicorn`: Web interface and API
+* `aiohttp`: Async HTTP operations
+* `edge-tts`: Text-to-speech generation
+* `ollama`: Local LLM integration
+* `spacy`: NLP processing
+* `textblob`: Sentiment analysis
+* `scikit-learn`: ML utilities
+* `gradio`: UI components
+* `sentence-transformers`: Text embeddings
+* Additional utilities: `pyyaml`, `newspaper3k`, `geopy`
 
 ## Troubleshooting
 
-  * **Ollama Connection Issues:** Ensure your Ollama server is running and accessible at the `base_url` specified in `CONFIG`. Check the Ollama logs for errors.
-  * **Model Not Found:** Verify that you have pulled the required Ollama models (`mistral-small:24b-instruct-2501-q8_0`, `nomic-embed-text`) using `ollama run <model_name>`.
-  * **Audio Playback:**
-      * Confirm `edge-tts` is installed (`pip install edge-tts`).
-      * Ensure your system has the necessary audio playback libraries that `pydub` relies on (e.g., `ffmpeg`). You might need to install `ffmpeg` separately if it's not already on your system.
-      * Check the `news.log` file for any audio-related errors.
-  * **Feed Fetching Errors:** Review `news.log` for specific HTTP errors or parsing issues related to the RSS feeds.
-  * **High CPU/Memory Usage:** LLM inference can be resource-intensive. Consider using smaller models or adjusting `max_tokens` in the `CONFIG` for Ollama calls if you experience performance issues.
+* **Web Interface Issues:**
+    * Verify the server is running at http://localhost:8000
+    * Check news.log for error messages
+    * Ensure all static files are present
 
------
+* **Audio Problems:**
+    * Confirm edge-tts installation
+    * Verify system audio configuration
+    * Check audio queue status in logs
+
+* **Processing Issues:**
+    * Ensure Ollama server is running
+    * Verify model availability
+    * Check circuit breaker status
+    * Monitor performance metrics
+
+* **Feed Issues:**
+    * Validate feeds.yaml format
+    * Check feed URLs are accessible
+    * Review feed fetcher logs
 
 ## Contributing
 
-Contributions are welcome\! If you have suggestions for improvements, bug fixes, or new features, feel free to open an issue or submit a pull request.
-
-
-
-
-
-
-
-python -m spacy download en_core_web_sm
+Contributions welcome! Please feel free to submit issues or pull requests.
